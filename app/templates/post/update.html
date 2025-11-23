@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Publicación{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1 class="mb-4">Actualizar Publicación</h1>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Contenido</label>
+                        <textarea class="form-control" id="content" name="content" rows="15"
+                            required>{{ post.content }}</textarea>
+                    </div>
+                    {% if post.image_url %}
+                    <div class="mb-3">
+                        <label class="form-label">Imagen actual</label>
+                        <div>
+                            <img src="{{ url_for('static', filename=post.image_url) }}" alt="{{ post.title }}"
+                                class="img-thumbnail" style="max-width: 300px;">
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="image" class="form-label">{% if post.image_url %}Cambiar imagen{% else %}Agregar
+                            imagen{% endif %} (opcional)</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <small class="form-text text-muted">Formatos permitidos: PNG, JPG, JPEG, GIF, WEBP (máx.
+                            5MB)</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Categoría</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="tecnologia" {% if post.category=='tecnologia' %}selected{% endif %}>
+                                Tecnología</option>
+                            <option value="viajes" {% if post.category=='viajes' %}selected{% endif %}>Viajes</option>
+                            <option value="comida" {% if post.category=='comida' %}selected{% endif %}>Comida</option>
+                            <option value="educacion" {% if post.category=='educacion' %}selected{% endif %}>Educación
+                            </option>
+                            <option value="otros" {% if post.category=='otros' %}selected{% endif %}>Otros</option>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
+                        <a href="/post/view/{{ post.id }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CKEditor 5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#content'), {
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'link', 'bulletedList', 'numberedList', '|',
+                'blockQuote', 'insertTable', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo'
+            ],
+            language: 'es',
+            placeholder: 'Edita el contenido de tu publicación...',
+            table: {
+                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+            }
+        })
+        .then(editor => {
+            editor.editing.view.change(writer => {
+                writer.setStyle('min-height', '400px', editor.editing.view.document.getRoot());
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+{% endblock %}

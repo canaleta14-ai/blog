@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Blog{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4">Bienvenido a Mi Blog</h1>
+    <p class="lead">Comparte tus ideas y experiencias con el mundo</p>
+    <hr class="my-4">
+    <p>Explora artículos, crea publicaciones y conecta con otros usuarios.</p>
+    <a class="btn btn-primary btn-lg" href="/blog" role="button">Ver Blog</a>
+    <a class="btn btn-success btn-lg" href="/post/create" role="button">Crear Publicación</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📝 Publicaciones</h5>
+                <p class="card-text">Crea y gestiona tus publicaciones de blog fácilmente.</p>
+                <a href="/post/post" class="btn btn-outline-primary">Ver más</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">👤 Perfil</h5>
+                <p class="card-text">Administra tu perfil y configuración de usuario.</p>
+                <a href="/auth/profile" class="btn btn-outline-primary">Ver más</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📚 Blog</h5>
+                <p class="card-text">Explora todas las publicaciones del blog.</p>
+                <a href="/blog" class="btn btn-outline-primary">Ver más</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

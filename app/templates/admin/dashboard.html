@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Panel de Administración</h1>
+
+<!-- Estadísticas -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Usuarios</h5>
+                <h2>{{ total_users }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Publicaciones</h5>
+                <h2>{{ total_posts }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Comentarios</h5>
+                <h2>{{ total_comments }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navegación Admin -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="btn-group" role="group">
+            <a href="/admin/users" class="btn btn-outline-primary">Gestionar Usuarios</a>
+            <a href="/admin/posts" class="btn btn-outline-success">Gestionar Publicaciones</a>
+            <a href="/admin/comments" class="btn btn-outline-info">Gestionar Comentarios</a>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas por Categoría -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Publicaciones por Categoría</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category, count in category_stats %}
+                        <tr>
+                            <td><span class="badge bg-secondary">{{ category }}</span></td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Usuarios Recientes</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for user in recent_users %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ user.username }}
+                        <span class="badge bg-primary">{{ user.role }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Publicaciones Recientes -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Publicaciones Recientes</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in recent_posts %}
+                        <tr>
+                            <td><a href="/post/view/{{ post.id }}">{{ post.title }}</a></td>
+                            <td>{{ post.author.username }}</td>
+                            <td><span class="badge bg-secondary">{{ post.category }}</span></td>
+                            <td>{{ post.created_at.strftime('%d/%m/%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

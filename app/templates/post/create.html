@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Publicación{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1 class="mb-4">Crear Nueva Publicación</h1>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Ingresa el título de tu publicación" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Contenido</label>
+                        <textarea class="form-control" id="content" name="content" rows="15"
+                            placeholder="Escribe el contenido de tu publicación..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Imagen (opcional)</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <small class="form-text text-muted">Formatos permitidos: PNG, JPG, JPEG, GIF, WEBP (máx.
+                            5MB)</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Categoría</label>
+                        <select class="form-select" id="category" name="category">
+                            <option selected>Selecciona una categoría</option>
+                            <option value="tecnologia">Tecnología</option>
+                            <option value="viajes">Viajes</option>
+                            <option value="comida">Comida</option>
+                            <option value="educacion">Educación</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Publicar</button>
+                        <a href="/blog" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CKEditor 5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#content'), {
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'link', 'bulletedList', 'numberedList', '|',
+                'blockQuote', 'insertTable', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo'
+            ],
+            language: 'es',
+            placeholder: 'Escribe aquí tu contenido con formato rico...',
+            table: {
+                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+            }
+        })
+        .then(editor => {
+            editor.editing.view.change(writer => {
+                writer.setStyle('min-height', '400px', editor.editing.view.document.getRoot());
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+{% endblock %}
