@@ -61,7 +61,7 @@ def login():
     from flask import current_app
     token = jwt.encode({
         'user_id': user.id,
-        'exp': datetime.utcnow() + timedelta(hours=current_app.config['JWT_ACCESS_TOKEN_EXPIRES'])
+        'exp': datetime.utcnow() + current_app.config['JWT_ACCESS_TOKEN_EXPIRES']
     }, current_app.config['JWT_SECRET_KEY'], algorithm='HS256')
     
     return jsonify({
