@@ -12,11 +12,13 @@ def check_database():
     with app.app_context():
         try:
             # Verificar conexión
-            db.engine.execute('SELECT 1')
+            with db.engine.connect() as conn:
+                conn.execute(db.text('SELECT 1'))
             print("✅ Conexión a la base de datos exitosa")
 
             # Verificar tablas
-            inspector = db.inspect(db.engine)
+            from sqlalchemy import inspect
+            inspector = inspect(db.engine)
             tables = inspector.get_table_names()
             print(f"📋 Tablas encontradas: {tables}")
 
