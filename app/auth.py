@@ -39,11 +39,16 @@ def register():
         user = User(username=username, email=email)
         user.set_password(password)
         
-        db.session.add(user)
-        db.session.commit()
-        
-        flash('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success')
-        return redirect(url_for('auth.login'))
+        try:
+            db.session.add(user)
+            db.session.commit()
+            flash('¡Registro exitoso! Ahora puedes iniciar sesión.', 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error al registrar usuario: {e}")  # Para logs
+            flash('Error al registrar usuario. Inténtalo de nuevo.', 'danger')
+            return render_template('auth/register.html')
     
     return render_template('auth/register.html')
 

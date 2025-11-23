@@ -49,8 +49,14 @@ def create_app(config_name='default'):
     # Configurar CORS para el blueprint API
     CORS(app, resources={r"/api/*": {"origins": app.config['CORS_ORIGINS']}})
     
-    # Crear tablas si no existen
+    # Crear tablas si no existen (solo para desarrollo)
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            print("Tablas creadas/verficadas exitosamente")
+        except Exception as e:
+            print(f"Error al crear tablas: {e}")
+            # En producción, las migraciones deberían manejar esto
+            pass
     
     return app
