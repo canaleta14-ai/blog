@@ -72,3 +72,36 @@ h2 {
 .mb-custom {
     margin-bottom: 2rem;
 }
+
+/* Corrector ortográfico para CKEditor */
+.ck-editor__editable {
+    spellcheck: true !important;
+    -webkit-spellcheck: true !important;
+    -moz-spellcheck: true !important;
+    -ms-spellcheck: true !important;
+}
+
+/* Estilos para las sugerencias de corrección */
+.ck-editor__editable[spellcheck="true"] {
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+}
+
+/* Mejorar la experiencia de escritura */
+.ck-editor__editable:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Estilos para errores de ortografía (depende del navegador) */
+.ck-editor__editable ::spelling-error {
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-decoration-style: wavy;
+}
+
+.ck-editor__editable ::grammar-error {
+    text-decoration: underline;
+    text-decoration-color: green;
+    text-decoration-style: wavy;
+}
